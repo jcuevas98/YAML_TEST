@@ -1,0 +1,16 @@
+- name: alerting-telematic-webeye
+  groups:
+    - name: no-positions-provider-webeye-gps-1h
+      rules:
+        - alert: no-position-webeye-gps-after-1h
+          expr: absent_over_time(positions_positions_received_count{telematic_provider="shippeo.webeye.telematic"}[1h])
+          labels:
+            severity: critical
+            appli: telematic-alerting
+          annotations:
+            summary: No position webeye gps last hour
+            description: No position received last hour for webeye
+            expr: absent_over_time(positions_positions_received_count{telematic_provider="shippeo.webeye.telematic"}[1h])
+            runbook: none
+            component: telematic-alerting
+            class: app
